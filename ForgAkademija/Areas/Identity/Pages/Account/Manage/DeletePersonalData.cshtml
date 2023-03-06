@@ -1,0 +1,35 @@
+﻿@page
+@model DeletePersonalDataModel
+@{
+    ViewData["Title"] = "Brisanje naloga";
+    ViewData["ActivePage"] = ManageNavPages.PersonalData;
+}
+
+
+<div class="col-md-6 m-auto">
+    <h2 class="mb-3">@ViewData["Title"]</h2>
+
+    <div class="alert alert-warning mb-3" role="alert">
+        <p>
+            <strong>Akcija je trajna, i nije moguće vratiti nalog i podatke nakon nje.</strong>
+        </p>
+    </div>
+    <form id="delete-user" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @if (Model.RequirePassword)
+        {
+            <div class="form-group mb-2">
+                <label asp-for="Input.Password" class="form-label"></label>
+                <input asp-for="Input.Password" class="form-control" autocomplete="current-password" placeholder="Unesite svoju šifru" aria-required="true" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+        }
+        <div class="d-grid gap-2 mt-5">
+            <button type="submit" class="btn btn-outline-light">Potvrdi</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,139 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model ForgAkademija.Models.Course
+@inject SignInManager<IdentityUser> signInManager;
+
+<div class="container grid cd-container my-1 py-4">
+
+    <!-- Intro -->
+    <div class="cd-intro-section">
+        <h1 class="cd-course-name text-start text-white">@Html.DisplayFor(model => model.courseName)</h1>
+        <div class="mt-4">
+            <p class="text-soft-blue">
+                Naučite sve od A-Š, od početnika do profesionalca u Vašoj FAKP akademiji!
+            </p>
+            <div class="d-flex align-items-baseline text-soft-blue">
+                <i class="fa-solid fa-hand-point-right"></i>
+                <p class="ms-2">50 zadovoljnih polaznika kursa.</p>
+            </div>
+            <div class="d-flex align-items-baseline text-soft-blue">
+                <i class="fa-solid fa-hand-point-right"></i>
+                <p class="ms-2">Kurs kreiran: @Html.DisplayFor(model => model.creationTime)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Description -->
+    <div class="cd-description">
+        <h1 class="text-white text-start">Opis kursa</h1>
+        <p class="text-justify text-white mt-4">
+            @Html.DisplayFor(model => model.courseDescription)
+        </p>
+    </div>
+
+    <!-- Comments -->
+    <div class="cd-comments">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="text-white text-start">Komentari korisnika</h1>
+            @if (signInManager.IsSignedIn(User) && User.IsInRole("User"))
+            {
+                <a onclick="ShowInModal('@Url.Action("AddComment","Comment",new {id=Model.courseId},Context.Request.Scheme)', 'Nov komentar')" class="btn btn-outline-light light-btn mb-2">Komentariši</a>
+            }
+        </div>
+        @await Component.InvokeAsync("CommentsList",@Model.courseId)
+    </div>
+
+    <!-- Aside -->
+    <div class="cd-aside">
+        <div class="cd-sticky-section card bg-dark-blue p-4">
+            <div class="card-image">
+                <img src="@Html.DisplayFor(model => model.logoUrl)"
+                     class="w-100"
+                     alt="@Html.DisplayFor(model => model.courseName)" />
+            </div>
+            <div class="mt-4 mx-auto w-100">
+                <div class="cd-price text-cyan d-flex align-items-baseline ms-4">
+                    <i class="fa-solid fa-tags"></i>
+                    <p class="ms-1">@Html.DisplayFor(model => model.coursePrice) evra</p>
+                </div>
+                <div class="cd-buttons mb-1">
+                    @{
+                        Bill bill = (Bill)ViewData["billCorrectness"];
+
+                        if (signInManager.IsSignedIn(User))
+                        {
+                            if (bill != null || this.User.IsInRole("Administrator") || this.User.IsInRole("Moderator"))
+                            {
+                                <a onclick="VideoModal('@Url.Action("Video","Course",new {id=Model.courseId},Context.Request.Scheme)', '@Model.courseName')" class="btn btn-outline-light light-btn w-100 mb-3">Gledaj kurs</a>
+
+                                <a asp-action="AdditionalMaterial" asp-route-id="@Model.courseId" class="btn btn-outline-light light-btn w-100 mb-5">Materijali za vežbu</a>
+
+                                if (this.User.IsInRole("User"))
+                                {
+                                    <a onclick="ShowInModal('@Url.Action("DeleteBill","Bill",new {id=Model.courseId},Context.Request.Scheme)', 'Otkazivanje kursa')" class="btn btn-outline-light light-btn w-100 mb-3">Otkaži kurs</a>
+                                }
+                            }
+                            else
+                            {
+                                <a onclick="ShowInModal('@Url.Action("AddBill","Bill",new {id=Model.courseId},Context.Request.Scheme)', 'Otključavanje kursa: @Model.courseName')" class="btn btn-outline-light light-btn w-100 mb-3">Otključaj kurs</a>
+                            }
+                        }
+                        else
+                        {
+                            <a id="login" asp-area="Identity" asp-page="/Account/Login" class="btn btn-outline-light light-btn w-100 mb-3">Otključaj kurs</a>
+                        }
+                    }
+                </div>
+                <div class="cd-info">
+                    <p class="text-soft-blue"><strong>Ovaj kurs uključuje:</strong></p>
+                    <div class="d-flex align-items-baseline text-soft-blue">
+                        <i class="fa-solid fa-hourglass-start"></i>
+                        <p class="ms-2">@Html.DisplayFor(model => model.courseDuration) minuta video materijala.</p>
+                    </div>
+                    <div class="d-flex align-items-baseline text-soft-blue">
+                        <i class="fa-solid fa-file-arrow-down"></i>
+                        <p class="ms-2">PDF materijale za vežbu.</p>
+                    </div>
+                    <div class="d-flex align-items-baseline text-soft-blue">
+                        <i class="fa-solid fa-certificate"></i>
+                        <p class="ms-2">Sertifikat o završenom kursu.</p>
+                    </div>
+                    <div class="d-flex align-items-baseline text-soft-blue">
+                        <i class="fa-solid fa-infinity"></i>
+                        <p class="ms-2">Doživotni pristup.</p>
+                    </div>
+                    <div class="d-flex align-items-baseline text-soft-blue">
+                        <i class="fa-solid fa-mobile-screen"></i>
+                        <p class="ms-2">Dostupno i na mobilnim uređajima.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Large Modal -->
+    <div class="modal" tabindex="-1" id="video-modal">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content text-dark-blue">
+                <div class="modal-header">
+                    <h3 class="modal-title"></h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Regular Modal -->
+    <div class="modal" tabindex="-1" id="form-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-dark-blue">
+                <div class="modal-header">
+                    <h3 class="modal-title"></h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body"></div>
+            </div>
+        </div>
+    </div>
+
+</div>

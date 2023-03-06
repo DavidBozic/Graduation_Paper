@@ -1,0 +1,12 @@
+﻿@inject SignInManager<IdentityUser> SignInManager
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+}
+<ul class="nav nav-pills d-flex flex-row justify-content-around border-bottom">
+    <li class="nav-item mb-4"><a class="link @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./EditUser"><i class="fa-solid fa-pen-to-square"></i> Izmeni lične podatke</a></li>
+    <li class="nav-item mb-4"><a class="link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword"><i class="fa-solid fa-pen-to-square"></i> Izmeni šifru</a></li>
+    @if (!User.IsInRole("Administrator"))
+    {
+        <li class="nav-item mb-4"><a class="link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./DeletePersonalData"><i class="fa-solid fa-trash"></i> Obriši nalog</a></li>
+    }
+</ul>

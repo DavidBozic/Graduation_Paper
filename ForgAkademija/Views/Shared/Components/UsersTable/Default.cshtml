@@ -1,0 +1,72 @@
+﻿@model IEnumerable<ForgAkademija.ViewModel.UsersWithRolesViewModel>
+
+
+<!-- Modal -->
+<div class="modal" tabindex="-1" id="user-form-modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-dark-blue">
+            <div class="modal-header">
+                <h3 class="modal-title"></h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body"></div>
+        </div>
+    </div>
+</div>
+
+<div class="row table-responsive">
+    <table id="usersTable" class="display table table-bordered border-primary text-white border-0">
+        <thead class="bg-soft-blue text-dark-blue">
+            <tr>
+                <th>Korisničko ime</th>
+                <th>Email adresa</th>
+                <th>Uloga</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <!-- Single course row -->
+                <tr>
+                    <td class="w-25">@Html.DisplayFor(modelItem => item.userName)</td>
+                    <td class="w-25">@Html.DisplayFor(modelItem => item.email)</td>
+                    <td class="w-25">@Html.DisplayFor(modelItem => item.role)</td>
+                    <td class="w-25">
+                        @if (!@item.role.Equals("Administrator"))
+                        {
+                            <div class="row">
+                                <div class="col-md-6 d-flex justify-content-center">
+                                    <a onclick="UserModal('@Url.Action("ManageRole","Account",new {id=item.userId},Context.Request.Scheme)', 'Dodela uloge')" class="btn btn-sm btn-outline-light"><i class="fa-solid fa-pen-to-square"></i> Uloga</a>
+                                </div>
+                                <div class="col-md-6 d-flex justify-content-center">
+                                    <a onclick="UserModal('@Url.Action("DeleteUser","Account",new {id=item.userId},Context.Request.Scheme)', 'Brisanje korisnika')" class="btn btn-sm btn-outline-light"><i class="fa-solid fa-trash"></i> Ukloni</a>
+                                </div>
+                            </div>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- The reason why there are two identical modals
+ with a different name is that in the admin panel
+ where we should have a modal for courses and users
+ one modal is not working, it can display any course
+ or any user. But not both -->
+
+<script type="text/javascript">
+    UserModal = (url, title) => {
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (res) {
+                $("#user-form-modal").find(".modal-body").html(res);
+                $("#user-form-modal").find(".modal-title").html(title);
+                $("#user-form-modal").modal("show");
+            }
+        })
+    }
+</script>

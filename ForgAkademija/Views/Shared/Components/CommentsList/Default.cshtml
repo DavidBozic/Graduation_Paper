@@ -1,0 +1,42 @@
+﻿@using ForgAkademija.Models
+@using System.Security.Claims
+@model IEnumerable<Comment>
+
+<div class="row mt-4">
+    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+        <div class="custom-carousel carousel-inner bg-dark-blue p-4">
+
+            @foreach (var item in Model)
+            {
+                <div class="carousel-item active">
+                    <div class="bg-dark-blue p-4 w-75 m-auto">
+                        <div class="d-flex flex-column align-items-stretch p-3">
+                            <h2 class="text-cyan text-center fs-3 border-bottom w-100 pb-2">
+                                @Html.DisplayFor(modelItem => item.userName)
+                            </h2>
+                            <p class="text-soft-blue text-center fs-6 my-2">
+                                " @Html.DisplayFor(modelItem => item.commentText) "
+                            </p>
+
+                            @if (@item.userId.Equals(User.FindFirstValue(ClaimTypes.NameIdentifier)) || this.User.IsInRole("Administrator"))
+                            {
+                                <div class="d-flex justify-content-center mt-3">
+                                    <a asp-controller="Comment" asp-action="DeleteComment" asp-route-id="@item.commentId" class="btn btn-outline-light light-btn mb-2">Obriši</a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>

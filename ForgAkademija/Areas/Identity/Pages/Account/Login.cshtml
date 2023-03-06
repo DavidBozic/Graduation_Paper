@@ -1,0 +1,94 @@
+﻿@page
+@model LoginModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <link rel="stylesheet" href="~/css/site.css">
+
+    <!-- Font awesome icons -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+          integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer" />
+
+    <!-- Custom style -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+</head>
+<body class="d-flex justify-content-center align-items-center">
+    <div class="sign-main card bg-dark-blue pb-3">
+        <!-- Sign in form -->
+        <div class="text-white mw-100 mh-100">
+            <label class="form-title d-flex justify-content-center" aria-hidden="true">Prijava</label>
+            <form id="account" method="post" class="mb-4">
+                <div asp-validation-summary="ModelOnly" class="text-danger m-auto w-75"></div>
+                <div class="m-auto mb-3 w-75">
+                    <label asp-for="Input.Username" class="form-label"></label>
+                    <input asp-for="Input.Username" class="form-control" autocomplete="username" placeholder="Unesite korisničko ime" aria-required="true" />
+                    <span asp-validation-for="Input.Username" class="text-danger"></span>
+                </div>
+
+                <div class="m-auto mb-3 w-75">
+                    <label asp-for="Input.Password" class="form-label"></label>
+                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" placeholder="Unesite šifru" aria-required="true" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+
+                <div class="m-auto w-75">
+                    <div class="w-100 mb-3">
+                        <div class="form-check">
+                            <label asp-for="Input.RememberMe" class="form-label">
+                                <input class="form-check-input" asp-for="Input.RememberMe" value="true" />
+                                @Html.DisplayNameFor(m => m.Input.RememberMe)
+                            </label>
+                        </div>
+                    </div>
+
+                    <button id="login-submit" class="btn btn-outline-light w-100 mb-2">
+                        Prijavite se
+                    </button>
+
+                    <div class="text-center w-100">
+                        <a id="forgot-password" class="form-link" asp-page="./ForgotPassword">Zaboravli ste šifru?</a>
+                    </div>
+                </div>
+            </form>
+            <div class="m-auto w-75 text-center">
+                <p class="text-cyan">Nemate nalog? <a class="form-link" asp-page="./Register">Registrujte se ovde.</a></p>
+            </div>
+        </div>
+    </div>
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    </environment>
+
+    <environment exclude="Development">
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    </environment>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+</body>
+</html>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}

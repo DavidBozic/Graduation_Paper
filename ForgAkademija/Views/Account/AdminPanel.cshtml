@@ -1,0 +1,49 @@
+﻿@using System.Security.Claims
+@model ForgAkademija.ViewModel.AdminPanelViewModel
+
+<div class="container py-4">
+    <h1 class="text-soft-blue text-center mb-4"><i class="fa-solid fa-house-user"></i> Admin panel</h1>
+    <!-- Top section - Info cards -->
+    <div class="ap-num-cards d-flex mb-3">
+        <div class="ap-num-card text-center card bg-dark-blue p-4 mb-2">
+            <h1>@Html.DisplayFor(model => model.numOfCourses)</h1>
+            <p class="text-soft-blue">kurseva</p>
+        </div>
+        <div class="ap-num-card text-center card bg-dark-blue p-4 mb-2">
+            <h1>@Html.DisplayFor(model => model.numOfUsers)</h1>
+            <p class="text-soft-blue">korinsika</p>
+        </div>
+        <div class="ap-num-card text-center card bg-dark-blue p-4 mb-2">
+            <h1>@Html.DisplayFor(model => model.numOfModerators)</h1>
+            <p class="text-soft-blue">moderatora</p>
+        </div>
+    </div>
+    <div class="card bg-dark-blue p-4 overflow-hidden">
+        <div class="bg-dark-blue">
+            <!-- Lined tabs-->
+            <ul id="myTab" role="tablist" class="nav nav-tabs flex-sm-row text-center border-3">
+                <li class="nav-item flex-sm-fill">
+                    <a id="home-tab" data-toggle="tab" href="#courseTab" role="tab" aria-controls="home" aria-selected="true" class="nav-link link border-0 font-weight-bold active">Kursevi</a>
+                </li>
+                <li class="nav-item flex-sm-fill">
+                    <a id="profile-tab" data-toggle="tab" href="#usersTab" role="tab" aria-controls="profile" aria-selected="false" class="nav-link link border-0 font-weight-bold">Polaznici</a>
+                </li>
+            </ul>
+
+            <div id="myTab2Content" class="tab-content">
+                <!-- First tab (course tab) -->
+                <div id="courseTab" role="tabpanel" aria-labelledby="course-tab" class="tab-pane fade py-3 show active">
+
+                    @await Component.InvokeAsync("CoursesTable")
+
+                </div>
+                <!-- Second tab (users tab) -->
+                <div id="usersTab" role="tabpanel" aria-labelledby="users-tab" class="tab-pane fade py-3">
+
+                    @await Component.InvokeAsync("UsersTable")
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

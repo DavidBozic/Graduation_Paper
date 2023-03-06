@@ -1,0 +1,30 @@
+﻿@using ForgAkademija.ViewModel
+@model List<ManageRolesViewModel>
+
+@{
+    var userId = ViewBag.userId;
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="ManageRole" asp-controller="Account" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <div class="form-check m-1">
+                    <input type="hidden" asp-for="@Model[i].userId" value="@userId" />
+                    <input type="hidden" asp-for="@Model[i].roleId" />
+                    <input type="hidden" asp-for="@Model[i].roleName" />
+                    <input asp-for="@Model[i].isSelected" class="form-check-input">
+                    <label asp-for="@Model[i].isSelected" class="form-check-label">
+                        @Model[i].roleName
+                    </label>
+                </div>
+            }
+            <div class="d-grid gap-2 mt-5">
+                <input type="submit" value="Potvrdi" class="btn btn-outline-danger" />
+            </div>
+        </form>
+    </div>
+</div>

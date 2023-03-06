@@ -1,0 +1,42 @@
+﻿@using ForgAkademija.Models
+@model Comment
+
+@{
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="AddComment" asp-controller="Comment" method="post">
+            <input type="hidden" asp-for="courseId" />
+            <div class="form-group mb-2">
+                <textarea asp-for="commentText" class="form-control" style="height: 100px" placeholder="Unesite komentar"></textarea>
+                <span asp-validation-for="commentText" class="text-danger"></span>
+            </div>
+            <div class="d-grid gap-2 mt-5">
+                <input type="submit" value="Potvrdi" class="btn btn-outline-danger" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<environment include="Development">
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+</environment>
+
+<environment exclude="Development">
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+</environment>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}

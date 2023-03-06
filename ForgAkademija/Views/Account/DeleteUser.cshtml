@@ -1,0 +1,32 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model IdentityUser
+
+@{
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h5 class="d-flex justify-content-center">Da li ste sigurni da želite da obrišete nalog @Model.UserName?</h5>
+        <form asp-action="DeleteUser" class="d-flex justify-content-center">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="UserName" />
+            <input type="hidden" asp-for="NormalizedUserName" />
+            <input type="hidden" asp-for="Email" />
+            <input type="hidden" asp-for="NormalizedEmail" />
+            <input type="hidden" asp-for="EmailConfirmed" />
+            <input type="hidden" asp-for="PasswordHash" />
+            <input type="hidden" asp-for="SecurityStamp" />
+            <input type="hidden" asp-for="ConcurrencyStamp" />
+            <input type="hidden" asp-for="PhoneNumber" />
+            <input type="hidden" asp-for="PhoneNumberConfirmed" />
+            <input type="hidden" asp-for="TwoFactorEnabled" />
+            <input type="hidden" asp-for="LockoutEnd" />
+            <input type="hidden" asp-for="LockoutEnabled" />
+            <input type="hidden" asp-for="AccessFailedCount" />
+            <div class="d-grid gap-2 mt-5">
+                <input type="submit" value="Potvrdi" class="btn btn-outline-danger" /> &nbsp;
+            </div>
+        </form>
+    </div>
+</div>

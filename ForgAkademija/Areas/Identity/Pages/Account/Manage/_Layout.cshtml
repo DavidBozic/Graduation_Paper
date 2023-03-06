@@ -1,0 +1,29 @@
+﻿@{
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout))
+    {
+        Layout = (string)parentLayout;
+    }
+    else
+    {
+        Layout = "/Areas/Identity/Pages/_Layout.cshtml";
+    }
+}
+
+<div class="container py-4">
+    <h1 class="text-soft-blue text-center mb-4"><i class="fa-solid fa-user"></i> Korisnički nalog</h1>
+    <div class="col-12 p-4 card bg-dark-blue overflow-hidden">
+        <div class="bg-dark-blue">
+            <!-- Nav items-->
+            <partial name="_ManageNav" />
+
+            <div id="myTab2Content" class="tab-content mt-3">
+                <!-- Content -->
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

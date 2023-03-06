@@ -1,0 +1,77 @@
+﻿@using ForgAkademija.ViewModel
+@model CourseViewModel
+
+@{
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="AddCourse" asp-controller="Course" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mb-2">
+                <label asp-for="courseName" class="control-label"></label>
+                <input asp-for="courseName" class="form-control" placeholder="Unesite naziv kursa" />
+                <span asp-validation-for="courseName" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-2">
+                <label asp-for="courseDescription" class="control-label"></label>
+                <textarea asp-for="courseDescription" class="form-control" placeholder="Unesite opis kursa"></textarea>
+                <span asp-validation-for="courseDescription" class="text-danger"></span>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="courseDuration" class="control-label"></label>
+                        <input asp-for="courseDuration" class="form-control" placeholder="Unesite duzinu kursa"/>
+                        <span asp-validation-for="courseDuration" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="coursePrice" class="control-label"></label>
+                        <input asp-for="coursePrice" class="form-control" placeholder="Unesite cenu"/>
+                        <span asp-validation-for="coursePrice" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mb-2">
+                <label asp-for="videoLink" class="control-label"></label>
+                <input asp-for="videoLink" class="form-control" placeholder="Unesite link videa" />
+                <span asp-validation-for="videoLink" class="text-danger"></span>
+            </div>
+            <div class="mb-2">
+                <label asp-for="additionalMaterial" class="control-label"></label>
+                <input asp-for="additionalMaterial" class="form-control">
+            </div>
+            <div>
+                <label asp-for="logo" class="control-label"></label>
+                <input asp-for="logo" class="form-control">
+            </div>
+            <div class="d-grid gap-2 mt-5">
+                <input type="submit" value="Dodaj kurs" class="btn btn-outline-danger" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<environment include="Development">
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+</environment>
+
+<environment exclude="Development">
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+</environment>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}

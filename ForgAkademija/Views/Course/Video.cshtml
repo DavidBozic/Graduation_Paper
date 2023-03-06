@@ -1,0 +1,11 @@
+﻿@model ForgAkademija.Models.Course
+
+@{
+    Layout = null;
+}
+
+<div class="row d-flex justify-content-center">
+    <div class="col-md-12">
+        <iframe src=@Html.DisplayFor(model => model.videoLink) class="w-100" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="min-height:400px" allowfullscreen></iframe>
+    </div>
+</div>

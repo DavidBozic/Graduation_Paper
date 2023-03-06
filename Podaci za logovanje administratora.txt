@@ -1,0 +1,3 @@
+Prilikom izvrsavanja migracija upisuje se administrator u bazu podataka, njegovi podaci za pristup su:
+Korisnicko ime: administrator
+Sifra: Test-1234
