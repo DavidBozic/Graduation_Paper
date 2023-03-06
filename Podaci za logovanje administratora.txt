@@ -1,3 +1,0 @@
-When performing migrations, the administrator is entered into the database, his access data are:
-Username: administrator
-Password: Test-1234
